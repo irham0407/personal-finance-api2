@@ -2,7 +2,7 @@ package com.imnkeuangan.personal_finance_api2.controller;
 
 import com.imnkeuangan.personal_finance_api2.dto.request.CreateWalletRequest;
 import com.imnkeuangan.personal_finance_api2.dto.response.WalletResponse;
-import com.imnkeuangan.personal_finance_api2.service.WalletService;
+import com.imnkeuangan.personal_finance_api2.service.WalletServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WalletController {
 
-    private final WalletService walletService;
+    private final WalletServiceImpl walletService;
 
     @PostMapping
     public ResponseEntity<WalletResponse> create(@Valid @RequestBody CreateWalletRequest request) {
