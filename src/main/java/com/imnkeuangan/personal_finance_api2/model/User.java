@@ -1,5 +1,6 @@
 package com.imnkeuangan.personal_finance_api2.model;
 
+import com.imnkeuangan.personal_finance_api2.constant.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,4 +21,8 @@ public class User {
 
     @Column(nullable = false)
     private String password; // Pastikan nanti dienkripsi (misal pakai BCrypt)
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 }
