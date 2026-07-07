@@ -14,6 +14,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    // TAMBAHKAN FIELD INI AGAR MATCH DENGAN USERREPOSITORY
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @Column(nullable = false)
     private String password; // Pastikan nanti dienkripsi (misal pakai BCrypt)
 }
