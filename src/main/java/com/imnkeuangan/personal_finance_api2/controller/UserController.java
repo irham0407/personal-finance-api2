@@ -1,6 +1,7 @@
 package com.imnkeuangan.personal_finance_api2.controller;
 
 import com.imnkeuangan.personal_finance_api2.dto.NewCreate.UserRegisterDto;
+import com.imnkeuangan.personal_finance_api2.dto.request.UserLoginDto;
 import com.imnkeuangan.personal_finance_api2.model.User;
 import com.imnkeuangan.personal_finance_api2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,16 @@ public class UserController {
             return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginDto loginDto) {
+        try {
+            User user = userService.loginUser(loginDto);
+            return new ResponseEntity<>(user, HttpStatus.OK); // Mengembalikan status 200 OK jika sukses
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED); // 401 Unauthorized jika gagal
         }
     }
 }

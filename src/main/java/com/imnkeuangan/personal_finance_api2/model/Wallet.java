@@ -1,17 +1,13 @@
 package com.imnkeuangan.personal_finance_api2.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
+import com.imnkeuangan.personal_finance_api2.model.User;
 
 @Entity
 @Table(name = "tb_wallets")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Wallet {
 
     @Id
@@ -24,6 +20,10 @@ public class Wallet {
     @Column(nullable = false)
     private BigDecimal balance;
 
-    @Column(length = 255)
     private String description;
+
+    // Hubungan: Banyak Dompet bisa dimiliki oleh Satu User (Many Wallets to One User)
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

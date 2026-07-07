@@ -2,6 +2,7 @@ package com.imnkeuangan.personal_finance_api2.service;
 
 import com.imnkeuangan.personal_finance_api2.constant.Role;
 import com.imnkeuangan.personal_finance_api2.dto.NewCreate.UserRegisterDto;
+import com.imnkeuangan.personal_finance_api2.dto.request.UserLoginDto;
 import com.imnkeuangan.personal_finance_api2.model.User;
 import com.imnkeuangan.personal_finance_api2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,22 @@ public class UserService {
         }
 
         return userRepository.save(user);
+    }
+
+    public User loginUser(UserLoginDto loginDto) {
+        // 1. Cari user berdasarkan username ATAU email
+        User user = userRepository.findByUsername(loginDto.getUsernameOrEmail())
+                .orElseGet(() -> userRepository.findAll().stream()
+                        .filter(u -> u.getEmail().equalsIgnoreCase(loginDto.getUsernameOrEmail()))
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException("Username atau Email tidak ditemukan!")));
+
+        // 2. Cocokkan password (sementara masih plain-text)
+        if (!user.getPassword().equals(loginDto.getPassword())) {
+            throw new RuntimeException("Password salah!");
+        }
+
+        // 3. Jika cocok, kembalikan data user
+        return user;
     }
 }
