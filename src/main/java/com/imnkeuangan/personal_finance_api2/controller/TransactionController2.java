@@ -29,7 +29,7 @@ public class TransactionController2 {
     }
 
     // 1. Endpoint untuk mendapatkan SEMUA riwayat transaksi tanpa terkecuali
-    @GetMapping
+    @GetMapping("/wallet")
     public ResponseEntity<List<Transaction>> getAllTransactions() {
         List<Transaction> transactions = transactionService.getAllTransactions();
         return new ResponseEntity<>(transactions, HttpStatus.OK);
