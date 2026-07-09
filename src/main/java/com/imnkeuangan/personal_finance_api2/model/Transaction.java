@@ -16,20 +16,17 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private BigDecimal amount;
-
+    private BigDecimal amount; // 2. Diubah ke BigDecimal agar sinkron dengan Service
+    private String type;
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TransactionType type; // INCOME atau EXPENSE
-
-    @Column(nullable = false)
     private ZonedDateTime transactionDate;
 
-    // Menghubungkan Transaksi ke Wallet tertentu (Many Transactions to One Wallet)
     @ManyToOne
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
+
+    @PrePersist
+    protected void onCreate() {
+        this.transactionDate = ZonedDateTime.now();
+    }
 }

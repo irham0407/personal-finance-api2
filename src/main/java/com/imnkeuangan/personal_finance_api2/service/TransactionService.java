@@ -49,7 +49,7 @@ public class TransactionService {
         Transaction transaction = new Transaction();
         transaction.setAmount(dto.getAmount());
         transaction.setDescription(dto.getDescription());
-        transaction.setType(dto.getType());
+        transaction.setType(dto.getType().name()); // Mengubah objek Enum menjadi String agar cocok dengan Entity
         transaction.setTransactionDate(ZonedDateTime.now()); // Set jam saat ini
         transaction.setWallet(wallet);
 
