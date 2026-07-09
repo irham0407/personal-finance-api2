@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService2{
@@ -60,5 +61,21 @@ public class TransactionServiceImpl implements TransactionService2{
 
         // 6. Simpan data riwayat transaksi ke database (tb_transactions) lalu kembalikan hasilnya
         return transactionRepository.save(transaction);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Transaction> getTransactionsByWalletId(Long walletId) {
+        // Validasi dulu apakah wallet-nya eksis di database sebelum mencari transaksinya
+        if (!walletRepository.existsById(walletId)) {
+            throw new RuntimeException("Dompet dengan ID " + walletId + " tidak ditemukan!");
+        }
+        return transactionRepository.findByWalletId(walletId);
     }
 }
